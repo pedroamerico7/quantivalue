@@ -111,7 +111,7 @@ export default function App() {
     <div className="app-shell">
       <header className="site-header">
         <a className="logo" href="#top" aria-label="QuantiValue home">
-          <span className="logo-symbol">Q</span>
+          <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
           <span className="logo-name">QuantiValue</span>
         </a>
 
@@ -122,7 +122,7 @@ export default function App() {
         </nav>
 
         <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
-          Private acquisition <Arrow />
+          Private inquiry <Arrow />
         </button>
       </header>
 
@@ -300,8 +300,8 @@ export default function App() {
       </main>
 
       <footer>
-        <a className="logo footer-logo" href="#top">
-          <span className="logo-symbol">Q</span>
+        <a className="logo footer-logo" href="#top" aria-label="Back to top">
+          <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
           <span className="logo-name">QuantiValue</span>
         </a>
         <span>Premium brand available for acquisition</span>
