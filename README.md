@@ -33,4 +33,3 @@ ORDER BY id DESC;
 ```
 
 The form includes server-side validation, a parameterized query, and a honeypot field.
-

@@ -23,6 +23,7 @@ function Arrow() {
 export default function App() {
   const [offerStatus, setOfferStatus] = useState({ state: "idle", message: "" });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [offerOpen, setOfferOpen] = useState(false);
   const [viewCount, setViewCount] = useState(null);
 
   useEffect(() => {
@@ -126,7 +127,7 @@ export default function App() {
             <h1>Intelligence<br />behind every<br /><em>valuation.</em></h1>
             <p className="lede">A distinctive global brand for AI-powered valuation, financial intelligence and quantitative decision systems.</p>
             <div className="hero-actions">
-              <a className="button button-dark" href="#acquisition">Make an offer <Arrow /></a>
+              <button className="button button-dark" type="button" onClick={() => setOfferOpen(true)}>Make an Offer <Arrow /></button>
               <a className="text-link" href="#rationale">Explore the brand <span>↓</span></a>
             </div>
             <div className="public-counter" aria-live="polite">
@@ -269,6 +270,48 @@ export default function App() {
         <p>Premium AI & Financial Intelligence Brand</p>
         <span>© 2026 QuantiValue</span>
       </footer>
-    </div>
+    
+      {offerOpen && (
+        <div className="offer-modal-backdrop" role="presentation" onMouseDown={() => setOfferOpen(false)}>
+          <div
+            className="offer-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="offer-modal-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button className="offer-modal-close" type="button" aria-label="Close offer form" onClick={() => setOfferOpen(false)}>×</button>
+            <div className="offer-modal-copy">
+              <p className="section-kicker">Confidential acquisition</p>
+              <h2 id="offer-modal-title">Make an Offer</h2>
+              <p>Submit a serious acquisition proposal for QuantiValue.com. Your information is stored privately for owner review.</p>
+              <div className="modal-signal">
+                <span className="counter-pulse" aria-hidden="true" />
+                <strong>{viewCount === null ? "Live interest" : `${viewCount.toLocaleString("en-US")}+ visits`}</strong>
+              </div>
+            </div>
+
+            <form className="inquiry-form modal-form" onSubmit={handleSubmit}>
+              <div className="form-grid">
+                <label>Name<input name="name" required minLength={2} maxLength={100} autoComplete="name" placeholder="Your name" /></label>
+                <label>Company<input name="company" required minLength={2} maxLength={120} autoComplete="organization" placeholder="Organization" /></label>
+              </div>
+              <label>Business email<input name="email" type="email" required maxLength={160} autoComplete="email" placeholder="name@company.com" /></label>
+              <label>Offer amount (USD)<input name="amount" type="number" min="1" step="1" inputMode="numeric" required placeholder="25000" /></label>
+              <label>Message<textarea name="message" rows={4} required minLength={10} maxLength={2000} defaultValue="I would like to discuss an offer for QuantiValue.com." /></label>
+              <label className="hp-field" aria-hidden="true">Website<input name="website" tabIndex="-1" autoComplete="off" /></label>
+              <button className="modal-submit" type="submit" disabled={offerStatus.state === "sending"}>
+                {offerStatus.state === "sending" ? "Submitting securely…" : <>Submit Confidential Offer <Arrow /></>}
+              </button>
+              <p className="form-note">Encrypted in transit. Stored privately in Cloudflare D1.</p>
+              {offerStatus.state !== "idle" && (
+                <p className={`form-status ${offerStatus.state}`} role="status">{offerStatus.message}</p>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
+
+</div>
   );
 }
