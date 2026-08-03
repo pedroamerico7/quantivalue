@@ -122,7 +122,7 @@ export default function App() {
         </nav>
 
         <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
-          Private inquiry <Arrow />
+          Private discussion <Arrow />
         </button>
       </header>
 
@@ -139,21 +139,21 @@ export default function App() {
             </div>
 
             <h1>
-              The brand for
-              <span>intelligent value.</span>
+              Financial intelligence
+              <span>you can verify.</span>
             </h1>
 
             <p className="hero-description">
-              QuantiValue.com is a premium global identity for AI-powered valuation,
-              quantitative finance and financial intelligence.
+              QuantiValue.com is a premium global brand for explainable AI, valuation
+              technology and institutional financial intelligence.
             </p>
 
             <div className="hero-actions">
               <button className="primary-cta" type="button" onClick={() => setOfferOpen(true)}>
-                Make an Offer <Arrow />
+                Request a Private Discussion <Arrow />
               </button>
               <a className="secondary-cta" href="#thesis">
-                Explore the opportunity <span>↓</span>
+                View the brand thesis <span>↓</span>
               </a>
             </div>
 
@@ -173,22 +173,60 @@ export default function App() {
             </div>
           </div>
 
-          <div className="hero-system" aria-hidden="true">
-            <div className="system-grid" />
-            <div className="system-ring ring-a" />
-            <div className="system-ring ring-b" />
-            <div className="system-ring ring-c" />
-            <div className="system-core">
-              <small>QUANTITATIVE</small>
-              <strong>Q</strong>
-              <small>VALUE</small>
+          <div className="dashboard-showcase" aria-label="Conceptual QuantiValue dashboard preview">
+            <div className="dashboard-chrome">
+              <div className="dashboard-brand">
+                <img src="/quantum-ring.svg" alt="" aria-hidden="true" />
+                <span>QuantiValue Intelligence</span>
+              </div>
+              <div className="dashboard-status"><i /> Live model</div>
             </div>
-            <span className="system-node node-a" />
-            <span className="system-node node-b" />
-            <span className="system-node node-c" />
-            <span className="system-label label-a">SIGNAL_01</span>
-            <span className="system-label label-b">VALUE_∞</span>
-            <span className="system-label label-c">AI / FINANCE</span>
+
+            <div className="dashboard-body">
+              <aside className="dashboard-sidebar" aria-hidden="true">
+                <span className="active">Overview</span>
+                <span>Valuation</span>
+                <span>Scenarios</span>
+                <span>Evidence</span>
+              </aside>
+
+              <div className="dashboard-main">
+                <div className="dashboard-heading">
+                  <div>
+                    <small>ENTERPRISE OVERVIEW</small>
+                    <strong>Northstar Analytics</strong>
+                  </div>
+                  <span>Updated now</span>
+                </div>
+
+                <div className="dashboard-kpis">
+                  <article><small>Enterprise value</small><strong>$2.43B</strong><span>+4.2%</span></article>
+                  <article><small>AI confidence</small><strong>98%</strong><span>High</span></article>
+                  <article><small>Risk score</small><strong>18</strong><span>Low</span></article>
+                </div>
+
+                <div className="dashboard-chart">
+                  <div className="chart-meta"><span>Valuation range</span><strong>$2.18B — $2.67B</strong></div>
+                  <svg viewBox="0 0 520 180" role="img" aria-label="Conceptual valuation trend chart">
+                    <defs>
+                      <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#3B63FF" stopOpacity="0.32" />
+                        <stop offset="100%" stopColor="#3B63FF" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    <path className="chart-area" d="M0 150 C65 140 92 118 138 126 S220 96 270 103 S350 55 405 72 S472 34 520 22 L520 180 L0 180 Z" />
+                    <path className="chart-line" d="M0 150 C65 140 92 118 138 126 S220 96 270 103 S350 55 405 72 S472 34 520 22" />
+                    <circle cx="520" cy="22" r="5" />
+                  </svg>
+                </div>
+
+                <div className="dashboard-insight">
+                  <div className="insight-mark">AI</div>
+                  <div><small>EXPLAINABLE INSIGHT</small><p>Value increased as recurring revenue improved and the discount rate declined.</p></div>
+                  <strong>94%</strong>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -300,7 +338,7 @@ export default function App() {
       </main>
 
       <footer>
-        <a className="logo footer-logo" href="#top" aria-label="Back to top">
+        <a className="logo footer-logo" href="#top">
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
           <span className="logo-name">QuantiValue</span>
         </a>
