@@ -24,7 +24,7 @@ async function readCount(env) {
 
 export async function onRequestGet({ env }) {
   if (!env.VISITS) {
-    return response({ error: "KV binding VISITS is not configured." }, 500);
+    return response({ views: INITIAL_VIEWS, configured: false });
   }
 
   const views = await readCount(env);
@@ -33,7 +33,7 @@ export async function onRequestGet({ env }) {
 
 export async function onRequestPost({ env }) {
   if (!env.VISITS) {
-    return response({ error: "KV binding VISITS is not configured." }, 500);
+    return response({ views: INITIAL_VIEWS, configured: false });
   }
 
   const current = await readCount(env);
