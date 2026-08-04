@@ -117,7 +117,7 @@ export default function App() {
 
         <nav aria-label="Primary navigation">
           <a href="#thesis">Platform</a>
-          <a href="#markets">Technology</a>
+          <a href="#technology">Technology</a>
           <a href="#brand">Brand</a>
           <a href="#acquire">Contact</a>
         </nav>
@@ -251,6 +251,76 @@ export default function App() {
             {[...sectors, ...sectors].map((sector, index) => (
               <span key={`${sector}-${index}`}>{sector}<i /></span>
             ))}
+          </div>
+        </section>
+
+
+        <section className="technology" id="technology">
+          <div className="technology-heading" data-reveal>
+            <p className="section-tag">Technology vision</p>
+            <h2>Three systems.<br />One verifiable decision.</h2>
+            <p>
+              QuantiValue is positioned around the infrastructure required to turn
+              complex financial information into decisions that can be reviewed,
+              challenged and trusted.
+            </p>
+          </div>
+
+          <div className="technology-grid">
+            <article className="technology-card" data-reveal>
+              <div className="technology-visual explainable-visual" aria-hidden="true">
+                <span className="tech-core">AI</span>
+                <span className="tech-node tech-node-a">Data</span>
+                <span className="tech-node tech-node-b">Logic</span>
+                <span className="tech-node tech-node-c">Evidence</span>
+                <i className="tech-line tech-line-a" />
+                <i className="tech-line tech-line-b" />
+                <i className="tech-line tech-line-c" />
+              </div>
+              <small>01 · EXPLAINABILITY</small>
+              <h3>Explainable AI Engine</h3>
+              <p>
+                Models designed to reveal assumptions, evidence and reasoning — not
+                just produce an opaque output.
+              </p>
+              <span className="technology-link">Trace every conclusion <Arrow /></span>
+            </article>
+
+            <article className="technology-card" data-reveal>
+              <div className="technology-visual valuation-visual" aria-hidden="true">
+                <span className="valuation-axis axis-y" />
+                <span className="valuation-axis axis-x" />
+                <span className="valuation-bar bar-one" />
+                <span className="valuation-bar bar-two" />
+                <span className="valuation-bar bar-three" />
+                <span className="valuation-range">$2.18B — $2.67B</span>
+              </div>
+              <small>02 · VALUATION</small>
+              <h3>Institutional Valuation</h3>
+              <p>
+                A brand architecture built for DCF, comparables, scenario analysis
+                and enterprise-grade financial modeling.
+              </p>
+              <span className="technology-link">Model with discipline <Arrow /></span>
+            </article>
+
+            <article className="technology-card" data-reveal>
+              <div className="technology-visual decision-visual" aria-hidden="true">
+                <span className="decision-ring ring-one" />
+                <span className="decision-ring ring-two" />
+                <span className="decision-dot dot-one" />
+                <span className="decision-dot dot-two" />
+                <span className="decision-dot dot-three" />
+                <span className="decision-center">QV</span>
+              </div>
+              <small>03 · DECISIONS</small>
+              <h3>Decision Intelligence</h3>
+              <p>
+                A system positioned to connect valuation outputs with risk,
+                confidence and strategic action.
+              </p>
+              <span className="technology-link">Move from model to action <Arrow /></span>
+            </article>
           </div>
         </section>
 
