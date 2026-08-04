@@ -116,14 +116,13 @@ export default function App() {
         </a>
 
         <nav aria-label="Primary navigation">
-          <a href="#thesis">Platform</a>
-          <a href="#markets">Technology</a>
-          <a href="#pillars">Brand</a>
-          <a href="#acquire">Contact</a>
+          <a href="#thesis">Thesis</a>
+          <a href="#markets">Markets</a>
+          <a href="#acquire">Acquire</a>
         </nav>
 
         <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
-          Request discussion <Arrow />
+          Private discussion <Arrow />
         </button>
       </header>
 
@@ -136,17 +135,17 @@ export default function App() {
           <div className="hero-content" data-reveal>
             <div className="availability">
               <span className="live-dot" />
-              Explainable AI • Valuation • Institutional Finance
+              Premium .COM available for acquisition
             </div>
 
             <h1>
-              The brand for
-              <span>intelligent finance.</span>
+              Financial intelligence
+              <span>you can verify.</span>
             </h1>
 
             <p className="hero-description">
-              Enterprise-grade brand for explainable AI, valuation technology and
-              institutional financial intelligence.
+              QuantiValue.com is a premium global brand for explainable AI, valuation
+              technology and institutional financial intelligence.
             </p>
 
             <div className="hero-actions">
@@ -154,7 +153,7 @@ export default function App() {
                 Request private discussion <Arrow />
               </button>
               <a className="secondary-cta" href="#thesis">
-                Read the brand thesis <span>↓</span>
+                View the brand thesis <span>↓</span>
               </a>
             </div>
 
@@ -164,16 +163,16 @@ export default function App() {
 
             <div className="hero-proof">
               <div>
-                <strong>{formatViews(views)}+</strong>
-                <span>recorded visits</span>
+                <strong>Premium .COM</strong>
+                <span>global digital asset</span>
               </div>
               <div>
-                <strong>.COM</strong>
-                <span>global standard</span>
+                <strong>Category-ready</strong>
+                <span>AI · finance · valuation</span>
               </div>
               <div>
-                <strong>Direct</strong>
-                <span>owner acquisition</span>
+                <strong>Private</strong>
+                <span>direct owner acquisition</span>
               </div>
             </div>
           </div>
@@ -233,24 +232,6 @@ export default function App() {
               </div>
             </div>
           </div>
-        </section>
-
-        <section className="brand-bridge" id="technology" aria-label="QuantiValue strategic pillars">
-          <article data-reveal>
-            <small>01</small>
-            <strong>Explainability</strong>
-            <p>Financial intelligence designed to make assumptions, evidence and reasoning visible.</p>
-          </article>
-          <article data-reveal>
-            <small>02</small>
-            <strong>Institutional trust</strong>
-            <p>A precise, credible identity for enterprise valuation, investment research and finance.</p>
-          </article>
-          <article data-reveal>
-            <small>03</small>
-            <strong>Strategic acquisition</strong>
-            <p>A category-ready .COM brand available for acquisition, licensing or partnership.</p>
-          </article>
         </section>
 
         <section className="sector-rail" aria-label="Target markets">
