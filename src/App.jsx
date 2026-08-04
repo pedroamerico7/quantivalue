@@ -61,6 +61,27 @@ export default function App() {
   const [views, setViews] = useState(null);
   const [offerOpen, setOfferOpen] = useState(false);
   const [offerStatus, setOfferStatus] = useState({ state: "idle", message: "" });
+  const [demoInputs, setDemoInputs] = useState({
+    revenue: 500,
+    margin: 28,
+    growth: 22,
+    industry: "software",
+  });
+  const [demoRunning, setDemoRunning] = useState(false);
+  const [demoComplete, setDemoComplete] = useState(true);
+
+  const valuation = useMemo(() => {
+    const multiples = { software: 4.75, fintech: 4.25, services: 2.4, industrial: 2.05 };
+    const baseMultiple = multiples[demoInputs.industry] || 3;
+    const growthAdjustment = 1 + Math.max(-.2, Math.min(.45, (demoInputs.growth - 10) / 100));
+    const marginAdjustment = .78 + Math.max(.05, demoInputs.margin / 100);
+    const enterpriseValue = demoInputs.revenue * baseMultiple * growthAdjustment * marginAdjustment;
+    const confidence = Math.round(Math.max(74, Math.min(98, 82 + demoInputs.margin * .22 + demoInputs.growth * .18)));
+    const low = enterpriseValue * .9;
+    const high = enterpriseValue * 1.11;
+
+    return { enterpriseValue, confidence, low, high };
+  }, [demoInputs]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -138,7 +159,7 @@ export default function App() {
         </a>
 
         <nav aria-label="Primary navigation">
-          <a href="#thesis">Platform</a>
+          <a href="#demo">Platform</a>
           <a href="#technology">Technology</a>
           <a href="#brand">Brand</a>
           <a href="#acquire">Contact</a>
@@ -186,8 +207,8 @@ export default function App() {
               <button className="primary-cta" type="button" onClick={() => setOfferOpen(true)}>
                 Request private discussion <Arrow />
               </button>
-              <a className="secondary-cta" href="#thesis">
-                Read the brand thesis <span>↓</span>
+              <a className="secondary-cta" href="#demo">
+                Experience the platform <span>↓</span>
               </a>
             </div>
 
@@ -343,6 +364,143 @@ export default function App() {
               </p>
               <span className="technology-link">Move from model to action <Arrow /></span>
             </article>
+          </div>
+        </section>
+
+
+
+        <section className="valuation-demo" id="demo">
+          <div className="demo-heading" data-reveal>
+            <p className="section-tag light">Interactive product demo</p>
+            <h2>Experience explainable valuation.</h2>
+            <p>
+              Adjust the operating profile and watch the conceptual valuation update.
+              The model is illustrative — the experience is the product thesis.
+            </p>
+          </div>
+
+          <div className="demo-shell" data-reveal>
+            <div className="demo-controls">
+              <div className="demo-control-heading">
+                <span>Company profile</span>
+                <small>USD · illustrative model</small>
+              </div>
+
+              <label>
+                <span>Annual revenue</span>
+                <strong>${demoInputs.revenue}M</strong>
+                <input
+                  type="range"
+                  min="50"
+                  max="1500"
+                  step="25"
+                  value={demoInputs.revenue}
+                  onChange={(event) => setDemoInputs((current) => ({ ...current, revenue: Number(event.target.value) }))}
+                />
+              </label>
+
+              <label>
+                <span>EBITDA margin</span>
+                <strong>{demoInputs.margin}%</strong>
+                <input
+                  type="range"
+                  min="5"
+                  max="55"
+                  step="1"
+                  value={demoInputs.margin}
+                  onChange={(event) => setDemoInputs((current) => ({ ...current, margin: Number(event.target.value) }))}
+                />
+              </label>
+
+              <label>
+                <span>Revenue growth</span>
+                <strong>{demoInputs.growth}%</strong>
+                <input
+                  type="range"
+                  min="-5"
+                  max="60"
+                  step="1"
+                  value={demoInputs.growth}
+                  onChange={(event) => setDemoInputs((current) => ({ ...current, growth: Number(event.target.value) }))}
+                />
+              </label>
+
+              <label className="demo-select-label">
+                <span>Industry profile</span>
+                <select
+                  value={demoInputs.industry}
+                  onChange={(event) => setDemoInputs((current) => ({ ...current, industry: event.target.value }))}
+                >
+                  <option value="software">Enterprise software</option>
+                  <option value="fintech">Financial technology</option>
+                  <option value="services">Professional services</option>
+                  <option value="industrial">Industrial technology</option>
+                </select>
+              </label>
+
+              <button
+                className="demo-run"
+                type="button"
+                onClick={() => {
+                  setDemoRunning(true);
+                  setDemoComplete(false);
+                  window.setTimeout(() => {
+                    setDemoRunning(false);
+                    setDemoComplete(true);
+                  }, 900);
+                }}
+                disabled={demoRunning}
+              >
+                {demoRunning ? "Running valuation…" : "Run AI valuation"}
+                <Arrow />
+              </button>
+            </div>
+
+            <div className={`demo-result ${demoRunning ? "is-running" : ""}`}>
+              <div className="demo-result-topline">
+                <span><i /> QuantiAI model</span>
+                <small>{demoComplete ? "Analysis complete" : "Analyzing inputs"}</small>
+              </div>
+
+              <div className="demo-value">
+                <small>ENTERPRISE VALUE</small>
+                <strong>${(valuation.enterpriseValue / 1000).toFixed(2)}B</strong>
+                <span>Illustrative midpoint</span>
+              </div>
+
+              <div className="demo-result-grid">
+                <article>
+                  <small>Confidence</small>
+                  <strong>{valuation.confidence}%</strong>
+                </article>
+                <article>
+                  <small>Comparable range</small>
+                  <strong>${(valuation.low / 1000).toFixed(2)}B–${(valuation.high / 1000).toFixed(2)}B</strong>
+                </article>
+              </div>
+
+              <div className="demo-explainability">
+                <div className="demo-explainability-head">
+                  <span>Why this valuation?</span>
+                  <strong>{valuation.confidence}% explainable</strong>
+                </div>
+                <ul>
+                  <li><i /> Growth profile adjusts the category multiple.</li>
+                  <li><i /> EBITDA margin strengthens cash-generation quality.</li>
+                  <li><i /> Industry profile anchors the comparable range.</li>
+                  <li><i /> Confidence reflects the consistency of the inputs.</li>
+                </ul>
+              </div>
+
+              <div className="demo-timeline" aria-label="Valuation process">
+                {['Input', 'Normalize', 'Model', 'Explain', 'Decide'].map((step, index) => (
+                  <div key={step} className={demoComplete ? "complete" : index < 2 ? "complete" : ""}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{step}</strong>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
