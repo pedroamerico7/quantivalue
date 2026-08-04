@@ -116,9 +116,10 @@ export default function App() {
         </a>
 
         <nav aria-label="Primary navigation">
-          <a href="#thesis">Thesis</a>
-          <a href="#markets">Markets</a>
-          <a href="#acquire">Acquire</a>
+          <a href="#thesis">Platform</a>
+          <a href="#markets">Technology</a>
+          <a href="#brand">Brand</a>
+          <a href="#acquire">Contact</a>
         </nav>
 
         <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
@@ -132,6 +133,16 @@ export default function App() {
           <div className="hero-aura aura-one" aria-hidden="true" />
           <div className="hero-aura aura-two" aria-hidden="true" />
 
+          <div className="hero-orbital" aria-hidden="true">
+            <span className="orbital-ring orbital-ring-one" />
+            <span className="orbital-ring orbital-ring-two" />
+            <span className="orbital-ring orbital-ring-three" />
+            <span className="orbital-node orbital-node-one" />
+            <span className="orbital-node orbital-node-two" />
+            <span className="orbital-node orbital-node-three" />
+            <span className="orbital-node orbital-node-four" />
+          </div>
+
           <div className="hero-content" data-reveal>
             <div className="availability">
               <span className="live-dot" />
@@ -139,13 +150,14 @@ export default function App() {
             </div>
 
             <h1>
-              Financial intelligence
-              <span>you can verify.</span>
+              <span className="hero-title-main">Financial Intelligence.</span>
+              <span className="hero-title-signature">Built on Explainability.</span>
             </h1>
 
             <p className="hero-description">
-              QuantiValue.com is a premium global brand for explainable AI, valuation
-              technology and institutional financial intelligence.
+              Enterprise-grade brand for explainable AI, valuation technology and
+              institutional financial intelligence. Built for investors, M&amp;A advisors,
+              private equity and financial institutions.
             </p>
 
             <div className="hero-actions">
@@ -153,12 +165,12 @@ export default function App() {
                 Request private discussion <Arrow />
               </button>
               <a className="secondary-cta" href="#thesis">
-                View the brand thesis <span>↓</span>
+                Read the brand thesis <span>↓</span>
               </a>
             </div>
 
             <p className="hero-trust">
-              Available for acquisition <span>•</span> Licensing <span>•</span> Strategic partnership
+              Acquisition <span>•</span> Licensing <span>•</span> Strategic partnership
             </p>
 
             <div className="hero-proof">
@@ -288,7 +300,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="brand-film">
+        <section className="brand-film" id="brand">
           <div className="film-light film-light-a" aria-hidden="true" />
           <div className="film-light film-light-b" aria-hidden="true" />
           <div className="film-copy" data-reveal>

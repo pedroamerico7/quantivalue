@@ -595,3 +595,199 @@ footer {
   .hero::after { animation: none !important; }
   .primary-cta::before { display: none; }
 }
+
+
+/* Sprint 05 — Hero composition reset */
+.hero {
+  grid-template-columns: minmax(560px, .96fr) minmax(720px, 1.04fr);
+  gap: clamp(36px, 4.2vw, 86px);
+  padding-top: clamp(72px, 9vh, 118px);
+  padding-bottom: clamp(72px, 8vh, 110px);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+}
+
+.hero h1 {
+  margin: 42px 0 0;
+  max-width: 780px;
+  letter-spacing: 0;
+}
+
+.hero h1 .hero-title-main {
+  display: block;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 800;
+  font-size: clamp(70px, 7vw, 128px);
+  line-height: .88;
+  letter-spacing: -.082em;
+}
+
+.hero h1 .hero-title-signature {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-top: 24px;
+  color: var(--blue);
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(38px, 3.65vw, 66px);
+  line-height: 1;
+  letter-spacing: -.055em;
+}
+
+.hero-description {
+  max-width: 660px;
+  margin-top: 34px;
+  color: #677287;
+  font-size: clamp(18px, 1.25vw, 22px);
+  line-height: 1.62;
+}
+
+.hero-actions {
+  margin-top: 34px;
+}
+
+.hero-trust {
+  margin-top: 22px;
+  color: #6d788c;
+  letter-spacing: .09em;
+}
+
+.dashboard-showcase {
+  width: min(55vw, 900px);
+  min-height: 590px;
+  justify-self: center;
+  transform: perspective(1600px) rotateY(-12deg) rotateX(4deg) translateX(12px);
+  transform-origin: 50% 50%;
+  box-shadow:
+    0 120px 190px rgba(7,11,20,.32),
+    0 42px 120px rgba(59,99,255,.20),
+    0 0 0 1px rgba(255,255,255,.78),
+    0 0 110px rgba(59,99,255,.10);
+}
+
+.dashboard-showcase:hover {
+  transform: perspective(1600px) rotateY(-7deg) rotateX(2deg) translateX(4px) translateY(-10px);
+}
+
+@keyframes dashboardFloat {
+  0%,100% { transform: perspective(1600px) rotateY(-12deg) rotateX(4deg) translateX(12px) translateY(0); }
+  50% { transform: perspective(1600px) rotateY(-10deg) rotateX(3deg) translateX(8px) translateY(-10px); }
+}
+
+@media (max-width: 1220px) {
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .dashboard-showcase { width: min(54vw, 780px); }
+}
+
+@media (max-width: 980px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 68px;
+  }
+  .hero-content { max-width: 780px; }
+  .dashboard-showcase,
+  .dashboard-showcase:hover {
+    width: min(92vw, 840px);
+    transform: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .hero h1 .hero-title-main {
+    font-size: clamp(52px, 14.5vw, 68px);
+  }
+  .hero h1 .hero-title-signature {
+    margin-top: 18px;
+    font-size: clamp(31px, 9vw, 44px);
+  }
+  .hero-description {
+    margin-top: 28px;
+    font-size: 17px;
+  }
+}
+
+
+/* Sprint 06 — Restore visible orbital system */
+.hero-orbital {
+  position: absolute;
+  width: clamp(620px, 49vw, 900px);
+  aspect-ratio: 1;
+  right: clamp(-210px, -8vw, -70px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: .88;
+}
+
+.orbital-ring {
+  position: absolute;
+  inset: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(59, 99, 255, .13);
+  box-shadow: 0 0 70px rgba(59, 99, 255, .035) inset;
+  transform: translate(-50%, -50%);
+}
+.orbital-ring-one { width: 42%; height: 42%; }
+.orbital-ring-two { width: 70%; height: 70%; border-color: rgba(59, 99, 255, .105); }
+.orbital-ring-three { width: 96%; height: 96%; border-color: rgba(59, 99, 255, .075); }
+
+.orbital-node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 8px rgba(59,99,255,.09), 0 0 24px rgba(59,99,255,.32);
+  animation: orbitalPulse 4.8s ease-in-out infinite;
+}
+.orbital-node-one { top: 15%; left: 46%; }
+.orbital-node-two { top: 35%; right: 5%; animation-delay: -.9s; }
+.orbital-node-three { bottom: 11%; left: 31%; animation-delay: -1.8s; }
+.orbital-node-four { bottom: 31%; right: 18%; animation-delay: -2.7s; }
+
+.hero-content,
+.dashboard-showcase { z-index: 2; }
+.dashboard-showcase { position: relative; }
+
+@keyframes orbitalPulse {
+  0%, 100% { transform: scale(.82); opacity: .58; }
+  50% { transform: scale(1.12); opacity: 1; }
+}
+
+@media (max-width: 1100px) {
+  .hero-orbital {
+    width: 680px;
+    right: -260px;
+    opacity: .62;
+  }
+}
+
+@media (max-width: 980px) {
+  .hero-orbital {
+    width: 560px;
+    right: -240px;
+    top: 62%;
+    opacity: .42;
+  }
+}
+
+@media (max-width: 650px) {
+  .hero-orbital { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbital-node { animation: none !important; }
+}
