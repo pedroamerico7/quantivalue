@@ -347,3 +347,193 @@ footer {
   .modal-brand h2 { font-size:48px; }
   .form-row { grid-template-columns:1fr; gap:0; }
 }
+
+
+/* Sprint 02 — Premium Hero */
+.hero {
+  background:
+    radial-gradient(circle at 76% 38%, rgba(59,99,255,.095), transparent 34%),
+    linear-gradient(rgba(7,11,20,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(7,11,20,.035) 1px, transparent 1px),
+    #f8f9fb;
+  background-size: auto, 70px 70px, 70px 70px, auto;
+}
+
+.hero-content[data-reveal] { transition-delay: .08s; }
+.dashboard-showcase[data-reveal] { transition-delay: .22s; }
+
+.availability {
+  color: #263146;
+  letter-spacing: .17em;
+}
+
+.hero h1 {
+  margin: 46px 0 28px;
+  font-size: clamp(64px, 7.2vw, 128px);
+  line-height: .9;
+  letter-spacing: -.078em;
+}
+
+.hero h1 span {
+  margin-top: 12px;
+  font-size: .54em;
+  line-height: 1.08;
+  letter-spacing: -.045em;
+}
+
+.hero-description {
+  max-width: 690px;
+  color: #657086;
+  font-size: clamp(18px, 1.45vw, 23px);
+  line-height: 1.62;
+}
+
+.hero-actions { margin-top: 34px; }
+
+.primary-cta {
+  min-height: 58px;
+  padding: 0 27px;
+  border-radius: 999px;
+  gap: 54px;
+  box-shadow: 0 12px 30px rgba(7,11,20,.10);
+}
+.primary-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 48px rgba(7,11,20,.22);
+}
+
+.secondary-cta {
+  min-height: 48px;
+  align-items: center;
+  padding: 0 4px;
+  border-bottom: 1px solid rgba(7,11,20,.26);
+}
+
+.hero-trust {
+  margin: 20px 0 0;
+  color: #7b8598;
+  font: 400 10px var(--mono);
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+.hero-trust span { color: var(--blue); padding: 0 8px; }
+
+.dashboard-showcase {
+  position: relative;
+  overflow: hidden;
+  transform: perspective(1800px) rotateY(-9deg) rotateX(3deg) translateZ(0);
+  transform-origin: center center;
+  box-shadow:
+    0 84px 150px rgba(7,11,20,.26),
+    0 28px 70px rgba(59,99,255,.12),
+    0 0 0 1px rgba(255,255,255,.62);
+  transition: transform .55s cubic-bezier(.22,1,.36,1), box-shadow .55s ease;
+}
+.dashboard-showcase::before {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(59,99,255,.22), transparent 62%);
+  filter: blur(70px);
+}
+.dashboard-showcase:hover {
+  transform: perspective(1800px) rotateY(-5deg) rotateX(1deg) translateY(-8px);
+  box-shadow:
+    0 96px 170px rgba(7,11,20,.28),
+    0 34px 90px rgba(59,99,255,.16),
+    0 0 0 1px rgba(255,255,255,.7);
+}
+
+@media (max-width: 980px) {
+  .dashboard-showcase,
+  .dashboard-showcase:hover { transform: none; }
+}
+
+@media (max-width: 650px) {
+  .hero h1 { font-size: 54px; line-height: .94; }
+  .hero h1 span { margin-top: 9px; font-size: .58em; }
+  .hero-description { font-size: 17px; }
+  .hero-trust { line-height: 1.8; }
+}
+
+
+/* Sprint 03 — Positioning refinement */
+.hero h1 {
+  max-width: 920px;
+  font-size: clamp(68px, 7.4vw, 132px);
+}
+
+.hero h1 span {
+  margin-top: 10px;
+  font-size: .58em;
+  line-height: 1.02;
+}
+
+.hero-description {
+  max-width: 680px;
+}
+
+.brand-bridge {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(18px);
+}
+
+.brand-bridge article {
+  min-height: 210px;
+  padding: 34px 4.5vw 30px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  transition: background .3s ease, transform .3s ease;
+}
+
+.brand-bridge article:last-child { border-right: 0; }
+.brand-bridge article:hover {
+  background: rgba(59,99,255,.045);
+  transform: translateY(-4px);
+}
+
+.brand-bridge small {
+  color: var(--blue);
+  font: 500 9px var(--mono);
+  letter-spacing: .14em;
+}
+
+.brand-bridge strong {
+  margin-top: 34px;
+  font-size: clamp(20px, 1.7vw, 28px);
+  letter-spacing: -.045em;
+}
+
+.brand-bridge p {
+  max-width: 400px;
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+@media (max-width: 980px) {
+  .brand-bridge { grid-template-columns: 1fr; }
+  .brand-bridge article {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand-bridge article:last-child { border-bottom: 0; }
+}
+
+@media (max-width: 650px) {
+  .hero h1 { font-size: 57px; }
+  .hero h1 span { font-size: .62em; }
+  .brand-bridge article { padding: 28px 20px; }
+  .brand-bridge strong { margin-top: 22px; }
+}
