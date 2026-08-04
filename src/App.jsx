@@ -9,6 +9,28 @@ const sectors = [
   "Enterprise Analytics",
 ];
 
+
+const opportunitySignals = [
+  {
+    label: "AI-native finance",
+    title: "Explainability becomes a buying criterion",
+    copy: "As financial teams adopt AI, transparent reasoning and reviewable evidence become part of the product promise.",
+    index: "01",
+  },
+  {
+    label: "Valuation infrastructure",
+    title: "Decision workflows are moving beyond spreadsheets",
+    copy: "The category is expanding from isolated models toward connected systems for valuation, scenarios and institutional review.",
+    index: "02",
+  },
+  {
+    label: "Strategic brand value",
+    title: "A precise name compresses time to market",
+    copy: "QuantiValue signals quantitative intelligence and commercial value before the first sales call, demo or transaction.",
+    index: "03",
+  },
+];
+
 const pillars = [
   {
     number: "01",
@@ -353,20 +375,48 @@ export default function App() {
           </div>
         </section>
 
-        <section className="markets" id="markets">
-          <div className="markets-title" data-reveal>
-            <p className="section-tag">Built for valuable markets</p>
-            <h2>One name.<br />Multiple billion-dollar categories.</h2>
+        <section className="market-opportunity" id="markets">
+          <div className="opportunity-heading" data-reveal>
+            <p className="section-tag">Market opportunity</p>
+            <h2>Positioned where finance, AI and strategic value converge.</h2>
+            <p>
+              QuantiValue is designed to sit at the intersection of categories that
+              increasingly depend on trust, explainability and institutional-grade decision systems.
+            </p>
           </div>
 
-          <div className="market-grid">
-            {sectors.map((sector, index) => (
-              <article key={sector} data-reveal>
-                <small>{String(index + 1).padStart(2, "0")}</small>
-                <h3>{sector}</h3>
-                <span className="market-arrow">↗</span>
+          <div className="opportunity-signals">
+            {opportunitySignals.map((signal) => (
+              <article key={signal.index} data-reveal>
+                <small>{signal.index}</small>
+                <div>
+                  <span>{signal.label}</span>
+                  <h3>{signal.title}</h3>
+                  <p>{signal.copy}</p>
+                </div>
+                <Arrow />
               </article>
             ))}
+          </div>
+
+          <div className="opportunity-categories" data-reveal>
+            <div className="opportunity-orbit" aria-hidden="true">
+              <span className="opportunity-core">QV</span>
+              <i className="opportunity-ring ring-a" />
+              <i className="opportunity-ring ring-b" />
+              <b className="opportunity-dot dot-a" />
+              <b className="opportunity-dot dot-b" />
+              <b className="opportunity-dot dot-c" />
+            </div>
+            <div className="category-list">
+              <p>Category architecture</p>
+              {sectors.map((sector, index) => (
+                <div key={sector}>
+                  <small>{String(index + 1).padStart(2, "0")}</small>
+                  <strong>{sector}</strong>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
