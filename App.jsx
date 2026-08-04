@@ -118,12 +118,12 @@ export default function App() {
         <nav aria-label="Primary navigation">
           <a href="#thesis">Platform</a>
           <a href="#markets">Technology</a>
-          <a href="#pillars">Brand</a>
+          <a href="#brand">Brand</a>
           <a href="#acquire">Contact</a>
         </nav>
 
         <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
-          Request discussion <Arrow />
+          Private discussion <Arrow />
         </button>
       </header>
 
@@ -136,17 +136,18 @@ export default function App() {
           <div className="hero-content" data-reveal>
             <div className="availability">
               <span className="live-dot" />
-              Explainable AI for institutional finance
+              Premium .COM available for acquisition
             </div>
 
             <h1>
-              Financial intelligence
-              <span>built on explainability.</span>
+              <span className="hero-title-main">Financial Intelligence.</span>
+              <span className="hero-title-signature">Built on Explainability.</span>
             </h1>
 
             <p className="hero-description">
-              Enterprise-grade valuation intelligence powered by explainable AI.
-              Built for investors, M&amp;A advisors, private equity and financial institutions.
+              Enterprise-grade brand for explainable AI, valuation technology and
+              institutional financial intelligence. Built for investors, M&amp;A advisors,
+              private equity and financial institutions.
             </p>
 
             <div className="hero-actions">
@@ -159,21 +160,21 @@ export default function App() {
             </div>
 
             <p className="hero-trust">
-              Available for acquisition <span>•</span> Licensing <span>•</span> Strategic partnership
+              Acquisition <span>•</span> Licensing <span>•</span> Strategic partnership
             </p>
 
             <div className="hero-proof">
               <div>
-                <strong>{formatViews(views)}+</strong>
-                <span>recorded visits</span>
+                <strong>Premium .COM</strong>
+                <span>global digital asset</span>
               </div>
               <div>
-                <strong>.COM</strong>
-                <span>global standard</span>
+                <strong>Category-ready</strong>
+                <span>AI · finance · valuation</span>
               </div>
               <div>
-                <strong>Direct</strong>
-                <span>owner acquisition</span>
+                <strong>Private</strong>
+                <span>direct owner acquisition</span>
               </div>
             </div>
           </div>
@@ -289,7 +290,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="brand-film">
+        <section className="brand-film" id="brand">
           <div className="film-light film-light-a" aria-hidden="true" />
           <div className="film-light film-light-b" aria-hidden="true" />
           <div className="film-copy" data-reveal>
