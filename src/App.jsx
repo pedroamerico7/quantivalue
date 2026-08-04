@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const sectors = [
   "AI Valuation",
@@ -61,9 +61,6 @@ export default function App() {
   const [views, setViews] = useState(null);
   const [offerOpen, setOfferOpen] = useState(false);
   const [offerStatus, setOfferStatus] = useState({ state: "idle", message: "" });
-  const modalRef = useRef(null);
-  const closeButtonRef = useRef(null);
-  const triggerRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -95,42 +92,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!offerOpen) return undefined;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-
-    function handleModalKeys(event) {
-      if (event.key === "Escape") {
-        setOfferOpen(false);
-        return;
-      }
-
-      if (event.key !== "Tab" || !modalRef.current) return;
-      const focusable = modalRef.current.querySelectorAll(
-        'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      );
-      if (!focusable.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+    function closeOnEscape(event) {
+      if (event.key === "Escape") setOfferOpen(false);
     }
-
-    window.addEventListener("keydown", handleModalKeys);
-    return () => {
-      window.removeEventListener("keydown", handleModalKeys);
-      document.body.style.overflow = previousOverflow;
-      triggerRef.current?.focus();
-    };
-  }, [offerOpen]);
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, []);
 
   async function submitOffer(event) {
     event.preventDefault();
@@ -164,7 +131,6 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">Skip to main content</a>
       <header className="site-header">
         <a className="logo" href="#top" aria-label="QuantiValue home">
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
@@ -178,17 +144,12 @@ export default function App() {
           <a href="#acquire">Contact</a>
         </nav>
 
-        <button
-          ref={triggerRef}
-          className="header-offer"
-          type="button"
-          onClick={() => setOfferOpen(true)}
-        >
+        <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
           Private discussion <Arrow />
         </button>
       </header>
 
-      <main id="main-content" tabIndex="-1">
+      <main id="top">
         <section className="hero">
           <div className="hero-noise" aria-hidden="true" />
           <div className="hero-aura aura-one" aria-hidden="true" />
@@ -222,11 +183,7 @@ export default function App() {
             </p>
 
             <div className="hero-actions">
-              <button
-                className="primary-cta"
-                type="button"
-                onClick={(event) => { triggerRef.current = event.currentTarget; setOfferOpen(true); }}
-              >
+              <button className="primary-cta" type="button" onClick={() => setOfferOpen(true)}>
                 Request private discussion <Arrow />
               </button>
               <a className="secondary-cta" href="#thesis">
@@ -508,11 +465,7 @@ export default function App() {
             </div>
           </div>
 
-          <button
-            className="acquire-button"
-            type="button"
-            onClick={(event) => { triggerRef.current = event.currentTarget; setOfferOpen(true); }}
-          >
+          <button className="acquire-button" type="button" onClick={() => setOfferOpen(true)}>
             <span>Start a confidential conversation</span>
             <strong>Make an Offer</strong>
             <Arrow />
@@ -532,20 +485,13 @@ export default function App() {
       {offerOpen && (
         <div className="modal-backdrop" onMouseDown={() => setOfferOpen(false)}>
           <section
-            ref={modalRef}
             className="offer-modal"
             role="dialog"
             aria-modal="true"
             aria-labelledby="offer-title"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <button
-              ref={closeButtonRef}
-              className="modal-close"
-              type="button"
-              onClick={() => setOfferOpen(false)}
-              aria-label="Close acquisition dialog"
-            >
+            <button className="modal-close" type="button" onClick={() => setOfferOpen(false)} aria-label="Close">
               ×
             </button>
 
@@ -605,7 +551,7 @@ export default function App() {
               <p className="privacy-note">Private owner review • No public disclosure</p>
 
               {offerStatus.state !== "idle" && (
-                <p className={`status ${offerStatus.state}`} role="status" aria-live="polite">
+                <p className={`status ${offerStatus.state}`} role="status">
                   {offerStatus.message}
                 </p>
               )}
