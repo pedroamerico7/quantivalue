@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const sectors = [
   "AI Valuation",
@@ -28,30 +28,6 @@ const opportunitySignals = [
     title: "A precise name compresses time to market",
     copy: "QuantiValue signals quantitative intelligence and commercial value before the first sales call, demo or transaction.",
     index: "03",
-  },
-];
-
-
-const acquisitionSteps = [
-  {
-    number: "01",
-    title: "Private discussion",
-    copy: "A direct, confidential conversation to understand strategic fit, intended use and transaction expectations.",
-  },
-  {
-    number: "02",
-    title: "Strategic evaluation",
-    copy: "Review the domain, brand system, market positioning and available digital assets as one acquisition package.",
-  },
-  {
-    number: "03",
-    title: "Secure transfer",
-    copy: "Complete the transaction through a trusted escrow process with documented ownership transfer.",
-  },
-  {
-    number: "04",
-    title: "Brand ownership",
-    copy: "Receive QuantiValue.com and the strategic foundation required to launch, license or expand the brand.",
   },
 ];
 
@@ -85,6 +61,9 @@ export default function App() {
   const [views, setViews] = useState(null);
   const [offerOpen, setOfferOpen] = useState(false);
   const [offerStatus, setOfferStatus] = useState({ state: "idle", message: "" });
+  const modalRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -116,12 +95,42 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    function closeOnEscape(event) {
-      if (event.key === "Escape") setOfferOpen(false);
+    if (!offerOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeButtonRef.current?.focus();
+
+    function handleModalKeys(event) {
+      if (event.key === "Escape") {
+        setOfferOpen(false);
+        return;
+      }
+
+      if (event.key !== "Tab" || !modalRef.current) return;
+      const focusable = modalRef.current.querySelectorAll(
+        'button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusable.length) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, []);
+
+    window.addEventListener("keydown", handleModalKeys);
+    return () => {
+      window.removeEventListener("keydown", handleModalKeys);
+      document.body.style.overflow = previousOverflow;
+      triggerRef.current?.focus();
+    };
+  }, [offerOpen]);
 
   async function submitOffer(event) {
     event.preventDefault();
@@ -155,6 +164,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to main content</a>
       <header className="site-header">
         <a className="logo" href="#top" aria-label="QuantiValue home">
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
@@ -168,12 +178,17 @@ export default function App() {
           <a href="#acquire">Contact</a>
         </nav>
 
-        <button className="header-offer" type="button" onClick={() => setOfferOpen(true)}>
+        <button
+          ref={triggerRef}
+          className="header-offer"
+          type="button"
+          onClick={() => setOfferOpen(true)}
+        >
           Private discussion <Arrow />
         </button>
       </header>
 
-      <main id="top">
+      <main id="main-content" tabIndex="-1">
         <section className="hero">
           <div className="hero-noise" aria-hidden="true" />
           <div className="hero-aura aura-one" aria-hidden="true" />
@@ -207,7 +222,11 @@ export default function App() {
             </p>
 
             <div className="hero-actions">
-              <button className="primary-cta" type="button" onClick={() => setOfferOpen(true)}>
+              <button
+                className="primary-cta"
+                type="button"
+                onClick={(event) => { triggerRef.current = event.currentTarget; setOfferOpen(true); }}
+              >
                 Request private discussion <Arrow />
               </button>
               <a className="secondary-cta" href="#thesis">
@@ -473,62 +492,31 @@ export default function App() {
           </div>
         </section>
 
-        <section className="acquisition-experience" id="acquire">
-          <div className="acquisition-heading" data-reveal>
-            <div>
-              <p className="section-tag">Acquisition experience</p>
-              <h2>A direct path from strategic interest to ownership.</h2>
-            </div>
-            <p>
-              QuantiValue.com is offered through a private owner-led process designed
-              for qualified companies, investors and strategic partners.
-            </p>
-          </div>
-
-          <div className="acquisition-steps">
-            {acquisitionSteps.map((step) => (
-              <article key={step.number} data-reveal>
-                <small>{step.number}</small>
-                <div>
-                  <h3>{step.title}</h3>
-                  <p>{step.copy}</p>
-                </div>
-                <span aria-hidden="true">↗</span>
-              </article>
-            ))}
-          </div>
-
-          <div className="acquisition-trust" data-reveal>
-            <span>Premium .COM</span>
-            <span>Global category position</span>
-            <span>AI + finance</span>
-            <span>Institutional ready</span>
-            <span>Exclusive asset</span>
-          </div>
-        </section>
-
-        <section className="acquisition-closing">
-          <div className="closing-orbit" aria-hidden="true">
-            <i className="closing-ring closing-ring-one" />
-            <i className="closing-ring closing-ring-two" />
-            <b className="closing-core">QV</b>
-          </div>
-          <div className="closing-copy" data-reveal>
+        <section className="acquire" id="acquire">
+          <div className="acquire-grid" aria-hidden="true" />
+          <div className="acquire-copy" data-reveal>
             <p className="section-tag light">Private acquisition</p>
-            <h2>Acquire QuantiValue.com.</h2>
+            <h2>Acquire the name behind intelligent valuation.</h2>
             <p>
-              A category-defining digital asset for explainable AI, valuation
-              technology and institutional financial intelligence.
+              QuantiValue.com is available through a direct, confidential owner
+              transaction. Serious strategic inquiries are welcome.
             </p>
-            <div className="closing-meta">
-              <span>Acquisition</span>
-              <span>Licensing</span>
-              <span>Strategic partnership</span>
+            <div className="acquire-details">
+              <span>Premium .COM</span>
+              <span>Secure transfer</span>
+              <span>Global rights</span>
             </div>
-            <button className="closing-cta" type="button" onClick={() => setOfferOpen(true)}>
-              Request private discussion <Arrow />
-            </button>
           </div>
+
+          <button
+            className="acquire-button"
+            type="button"
+            onClick={(event) => { triggerRef.current = event.currentTarget; setOfferOpen(true); }}
+          >
+            <span>Start a confidential conversation</span>
+            <strong>Make an Offer</strong>
+            <Arrow />
+          </button>
         </section>
       </main>
 
@@ -537,28 +525,35 @@ export default function App() {
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
           <span className="logo-name">QuantiValue</span>
         </a>
-        <span>Premium digital asset · Private acquisition</span>
-        <a href="mailto:contact@quantivalue.com">contact@quantivalue.com</a>
+        <span>Premium brand available for acquisition</span>
+        <a href="mailto:sales@quantivalue.com">sales@quantivalue.com</a>
       </footer>
 
       {offerOpen && (
         <div className="modal-backdrop" onMouseDown={() => setOfferOpen(false)}>
           <section
+            ref={modalRef}
             className="offer-modal"
             role="dialog"
             aria-modal="true"
             aria-labelledby="offer-title"
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <button className="modal-close" type="button" onClick={() => setOfferOpen(false)} aria-label="Close">
+            <button
+              ref={closeButtonRef}
+              className="modal-close"
+              type="button"
+              onClick={() => setOfferOpen(false)}
+              aria-label="Close acquisition dialog"
+            >
               ×
             </button>
 
             <div className="modal-brand">
               <p className="section-tag light">Confidential acquisition</p>
-              <h2 id="offer-title">Private Discussion</h2>
+              <h2 id="offer-title">Make an Offer</h2>
               <p>
-                Share your strategic interest in QuantiValue.com. Details are encrypted
+                Submit a serious proposal for QuantiValue.com. Details are encrypted
                 in transit and stored privately for owner review.
               </p>
               <div className="modal-stat">
@@ -603,14 +598,14 @@ export default function App() {
               </label>
 
               <button type="submit" disabled={offerStatus.state === "sending"}>
-                {offerStatus.state === "sending" ? "Submitting securely…" : "Submit private inquiry"}
+                {offerStatus.state === "sending" ? "Submitting securely…" : "Submit confidential offer"}
                 <Arrow />
               </button>
 
               <p className="privacy-note">Private owner review • No public disclosure</p>
 
               {offerStatus.state !== "idle" && (
-                <p className={`status ${offerStatus.state}`} role="status">
+                <p className={`status ${offerStatus.state}`} role="status" aria-live="polite">
                   {offerStatus.message}
                 </p>
               )}
