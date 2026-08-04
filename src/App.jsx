@@ -88,7 +88,8 @@ export default function App() {
     })
       .then((res) => res.ok ? res.json() : Promise.reject())
       .then((data) => {
-        setViews(Number(data.views) || 0);
+        const reportedViews = Number(data?.views);
+        setViews(Number.isFinite(reportedViews) ? Math.max(FALLBACK_VIEWS, reportedViews) : FALLBACK_VIEWS);
         if (shouldIncrement) localStorage.setItem(storageKey, String(Date.now()));
       })
       .catch(() => setViews(FALLBACK_VIEWS));
@@ -199,6 +200,10 @@ export default function App() {
             </p>
 
             <div className="hero-proof">
+              <div className="visitor-proof" aria-label={`${formatViews(views)} recorded site visits`}>
+                <strong><span className="counter-live-dot" aria-hidden="true" />{formatViews(views)}+</strong>
+                <span>recorded site visits</span>
+              </div>
               <div>
                 <strong>Premium .COM</strong>
                 <span>global digital asset</span>

@@ -1126,3 +1126,52 @@ footer {
   .ring-a { width: 180px; height: 180px; }
   .category-list { padding: 24px 20px; }
 }
+
+/* Sprint 14 — Visible live counter and trust signals */
+.hero-proof {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.hero-proof .visitor-proof {
+  position: relative;
+  padding-left: 2px;
+}
+
+.hero-proof .visitor-proof strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter-live-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 0 6px rgba(59,99,255,.10), 0 0 18px rgba(59,99,255,.45);
+  animation: counterPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes counterPulse {
+  0%, 100% { transform: scale(.92); opacity: .72; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+.modal-stat strong {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 1180px) {
+  .hero-proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .hero-proof { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .counter-live-dot { animation: none; }
+}
