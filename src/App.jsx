@@ -31,6 +31,34 @@ const opportunitySignals = [
   },
 ];
 
+
+const includedAssets = [
+  {
+    number: "01",
+    title: "QuantiValue.com",
+    copy: "The exact-match premium .COM domain with direct owner transfer and global commercial flexibility.",
+    meta: "DOMAIN · DIGITAL IDENTITY",
+  },
+  {
+    number: "02",
+    title: "Brand identity system",
+    copy: "Quantum Ring symbol, wordmark direction, color system, typography and a consistent visual language.",
+    meta: "LOGO · WORDMARK · GUIDELINES",
+  },
+  {
+    number: "03",
+    title: "Live website platform",
+    copy: "Responsive React and Vite source, Cloudflare deployment configuration, acquisition flow and technical SEO assets.",
+    meta: "SOURCE · DEPLOYMENT · SEO",
+  },
+  {
+    number: "04",
+    title: "Product and market vision",
+    copy: "Dashboard concept, technology narrative, category architecture and positioning for explainable financial intelligence.",
+    meta: "PRODUCT UI · STRATEGY · POSITIONING",
+  },
+];
+
 const pillars = [
   {
     number: "01",
@@ -144,7 +172,7 @@ export default function App() {
         <nav aria-label="Primary navigation">
           <a href="#thesis">Platform</a>
           <a href="#technology">Technology</a>
-          <a href="#brand">Brand</a>
+          <a href="#asset-package">Assets</a>
           <a href="#acquire">Contact</a>
         </nav>
 
@@ -454,6 +482,56 @@ export default function App() {
                 <p>{pillar.copy}</p>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="asset-package" id="asset-package">
+          <div className="asset-package-heading" data-reveal>
+            <div>
+              <p className="section-tag">Included asset package</p>
+              <h2>More than a domain. A launch-ready brand foundation.</h2>
+            </div>
+            <p>
+              The acquisition is structured to transfer a coherent digital identity,
+              a working commercial website and the strategic system behind the name.
+            </p>
+          </div>
+
+          <div className="asset-package-grid">
+            {includedAssets.map((asset) => (
+              <article key={asset.number} data-reveal>
+                <div className="asset-card-top">
+                  <small>{asset.number}</small>
+                  <span>{asset.meta}</span>
+                </div>
+                <h3>{asset.title}</h3>
+                <p>{asset.copy}</p>
+                <div className="asset-card-line" aria-hidden="true" />
+              </article>
+            ))}
+          </div>
+
+          <div className="asset-package-summary" data-reveal>
+            <div>
+              <span>01</span>
+              <strong>Premium .COM</strong>
+              <small>Direct owner transfer</small>
+            </div>
+            <div>
+              <span>02</span>
+              <strong>Identity system</strong>
+              <small>Brand-ready assets</small>
+            </div>
+            <div>
+              <span>03</span>
+              <strong>Live codebase</strong>
+              <small>React + Cloudflare</small>
+            </div>
+            <div>
+              <span>04</span>
+              <strong>Strategic vision</strong>
+              <small>AI + finance positioning</small>
+            </div>
           </div>
         </section>
 
