@@ -1117,3 +1117,247 @@ footer {
   .ring-a { width: 180px; height: 180px; }
   .category-list { padding: 24px 20px; }
 }
+
+/* Sprint 09 — Acquisition experience */
+.acquisition-experience {
+  padding: 130px 4.5vw 110px;
+  background: #f5f7fb;
+  position: relative;
+  overflow: hidden;
+}
+.acquisition-experience::before {
+  content: "";
+  position: absolute;
+  width: 720px;
+  height: 720px;
+  right: -260px;
+  top: -300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,99,255,.11), transparent 68%);
+  pointer-events: none;
+}
+.acquisition-heading {
+  display: grid;
+  grid-template-columns: 1.3fr .7fr;
+  gap: 8vw;
+  align-items: end;
+  margin-bottom: 74px;
+  position: relative;
+}
+.acquisition-heading h2 {
+  margin: 16px 0 0;
+  max-width: 880px;
+  font-size: clamp(50px, 6vw, 94px);
+  line-height: .98;
+  letter-spacing: -.07em;
+}
+.acquisition-heading > p {
+  margin: 0;
+  max-width: 520px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.acquisition-steps {
+  border-top: 1px solid var(--ink);
+  position: relative;
+}
+.acquisition-steps article {
+  display: grid;
+  grid-template-columns: 78px .85fr 1fr auto;
+  gap: 28px;
+  align-items: center;
+  padding: 30px 4px;
+  border-bottom: 1px solid var(--line);
+  transition: transform .28s ease, background .28s ease, padding .28s ease;
+}
+.acquisition-steps article:hover {
+  transform: translateX(8px);
+  background: rgba(255,255,255,.66);
+  padding-left: 18px;
+  padding-right: 18px;
+}
+.acquisition-steps small {
+  color: var(--blue);
+  font: 500 10px var(--mono);
+  letter-spacing: .13em;
+}
+.acquisition-steps h3 {
+  margin: 0;
+  font-size: clamp(24px, 2.2vw, 38px);
+  letter-spacing: -.055em;
+}
+.acquisition-steps p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 680px;
+}
+.acquisition-steps article > span {
+  font-size: 20px;
+  color: var(--blue);
+}
+.acquisition-trust {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.58);
+  backdrop-filter: blur(10px);
+}
+.acquisition-trust span {
+  min-height: 86px;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  text-align: center;
+  border-right: 1px solid var(--line);
+  font: 500 10px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.acquisition-trust span:last-child { border-right: 0; }
+
+.acquisition-closing {
+  min-height: 720px;
+  padding: 110px 4.5vw;
+  color: white;
+  background:
+    radial-gradient(circle at 76% 48%, rgba(59,99,255,.28), transparent 30%),
+    linear-gradient(135deg, #060a12, #0b1730 58%, #132a5a);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  align-items: center;
+  isolation: isolate;
+}
+.acquisition-closing::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: .14;
+  background:
+    linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(to right, #000, transparent 86%);
+}
+.closing-copy { position: relative; z-index: 2; max-width: 900px; }
+.closing-copy h2 {
+  margin: 20px 0 26px;
+  font-size: clamp(62px, 7vw, 118px);
+  line-height: .92;
+  letter-spacing: -.08em;
+}
+.closing-copy > p:not(.section-tag) {
+  max-width: 760px;
+  margin: 0;
+  color: #b8c4d9;
+  font-size: clamp(18px, 1.7vw, 25px);
+  line-height: 1.65;
+}
+.closing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+.closing-meta span {
+  padding: 10px 13px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 999px;
+  color: #c8d2e5;
+  font: 500 9px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: rgba(255,255,255,.04);
+}
+.closing-cta {
+  margin-top: 42px;
+  min-height: 62px;
+  padding: 0 25px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: white;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 70px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.closing-cta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 70px rgba(0,0,0,.28);
+}
+.closing-orbit {
+  justify-self: center;
+  width: min(38vw, 520px);
+  aspect-ratio: 1;
+  position: relative;
+  order: 2;
+  opacity: .95;
+}
+.closing-ring {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(140,164,255,.28);
+  border-radius: 50%;
+}
+.closing-ring-two {
+  inset: 27%;
+  border-color: rgba(255,255,255,.18);
+  animation: closingSpin 18s linear infinite reverse;
+}
+.closing-ring-one::before,
+.closing-ring-two::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #6f8dff;
+  box-shadow: 0 0 30px rgba(96,127,255,.75);
+}
+.closing-ring-one::before { left: 16%; top: 6%; }
+.closing-ring-two::before { right: 6%; bottom: 20%; }
+.closing-core {
+  position: absolute;
+  inset: 39%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(14px);
+  color: white;
+  font-size: clamp(28px, 4vw, 56px);
+  letter-spacing: -.06em;
+  box-shadow: 0 0 80px rgba(59,99,255,.22);
+}
+@keyframes closingSpin { to { transform: rotate(360deg); } }
+
+@media (max-width: 980px) {
+  .acquisition-heading,
+  .acquisition-closing { grid-template-columns: 1fr; }
+  .acquisition-heading { gap: 28px; }
+  .acquisition-steps article { grid-template-columns: 58px 1fr auto; }
+  .acquisition-steps article p { grid-column: 2 / -1; }
+  .acquisition-trust { grid-template-columns: repeat(2, 1fr); }
+  .acquisition-trust span { border-bottom: 1px solid var(--line); }
+  .closing-orbit { order: 0; width: min(68vw, 430px); margin-bottom: 38px; }
+}
+
+@media (max-width: 620px) {
+  .acquisition-experience { padding: 88px 20px 78px; }
+  .acquisition-heading { margin-bottom: 50px; }
+  .acquisition-steps article { grid-template-columns: 42px 1fr auto; gap: 16px; }
+  .acquisition-steps article:hover { transform: none; padding-left: 4px; padding-right: 4px; }
+  .acquisition-trust { grid-template-columns: 1fr; }
+  .acquisition-trust span { border-right: 0; }
+  .acquisition-closing { min-height: auto; padding: 86px 20px; }
+  .closing-orbit { width: 78vw; max-width: 330px; }
+  .closing-cta { width: 100%; justify-content: space-between; gap: 20px; }
+}

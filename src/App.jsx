@@ -31,6 +31,30 @@ const opportunitySignals = [
   },
 ];
 
+
+const acquisitionSteps = [
+  {
+    number: "01",
+    title: "Private discussion",
+    copy: "A direct, confidential conversation to understand strategic fit, intended use and transaction expectations.",
+  },
+  {
+    number: "02",
+    title: "Strategic evaluation",
+    copy: "Review the domain, brand system, market positioning and available digital assets as one acquisition package.",
+  },
+  {
+    number: "03",
+    title: "Secure transfer",
+    copy: "Complete the transaction through a trusted escrow process with documented ownership transfer.",
+  },
+  {
+    number: "04",
+    title: "Brand ownership",
+    copy: "Receive QuantiValue.com and the strategic foundation required to launch, license or expand the brand.",
+  },
+];
+
 const pillars = [
   {
     number: "01",
@@ -449,27 +473,62 @@ export default function App() {
           </div>
         </section>
 
-        <section className="acquire" id="acquire">
-          <div className="acquire-grid" aria-hidden="true" />
-          <div className="acquire-copy" data-reveal>
-            <p className="section-tag light">Private acquisition</p>
-            <h2>Acquire the name behind intelligent valuation.</h2>
-            <p>
-              QuantiValue.com is available through a direct, confidential owner
-              transaction. Serious strategic inquiries are welcome.
-            </p>
-            <div className="acquire-details">
-              <span>Premium .COM</span>
-              <span>Secure transfer</span>
-              <span>Global rights</span>
+        <section className="acquisition-experience" id="acquire">
+          <div className="acquisition-heading" data-reveal>
+            <div>
+              <p className="section-tag">Acquisition experience</p>
+              <h2>A direct path from strategic interest to ownership.</h2>
             </div>
+            <p>
+              QuantiValue.com is offered through a private owner-led process designed
+              for qualified companies, investors and strategic partners.
+            </p>
           </div>
 
-          <button className="acquire-button" type="button" onClick={() => setOfferOpen(true)}>
-            <span>Start a confidential conversation</span>
-            <strong>Make an Offer</strong>
-            <Arrow />
-          </button>
+          <div className="acquisition-steps">
+            {acquisitionSteps.map((step) => (
+              <article key={step.number} data-reveal>
+                <small>{step.number}</small>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.copy}</p>
+                </div>
+                <span aria-hidden="true">↗</span>
+              </article>
+            ))}
+          </div>
+
+          <div className="acquisition-trust" data-reveal>
+            <span>Premium .COM</span>
+            <span>Global category position</span>
+            <span>AI + finance</span>
+            <span>Institutional ready</span>
+            <span>Exclusive asset</span>
+          </div>
+        </section>
+
+        <section className="acquisition-closing">
+          <div className="closing-orbit" aria-hidden="true">
+            <i className="closing-ring closing-ring-one" />
+            <i className="closing-ring closing-ring-two" />
+            <b className="closing-core">QV</b>
+          </div>
+          <div className="closing-copy" data-reveal>
+            <p className="section-tag light">Private acquisition</p>
+            <h2>Acquire QuantiValue.com.</h2>
+            <p>
+              A category-defining digital asset for explainable AI, valuation
+              technology and institutional financial intelligence.
+            </p>
+            <div className="closing-meta">
+              <span>Acquisition</span>
+              <span>Licensing</span>
+              <span>Strategic partnership</span>
+            </div>
+            <button className="closing-cta" type="button" onClick={() => setOfferOpen(true)}>
+              Request private discussion <Arrow />
+            </button>
+          </div>
         </section>
       </main>
 
@@ -478,8 +537,8 @@ export default function App() {
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
           <span className="logo-name">QuantiValue</span>
         </a>
-        <span>Premium brand available for acquisition</span>
-        <a href="mailto:sales@quantivalue.com">sales@quantivalue.com</a>
+        <span>Premium digital asset · Private acquisition</span>
+        <a href="mailto:contact@quantivalue.com">contact@quantivalue.com</a>
       </footer>
 
       {offerOpen && (
@@ -497,9 +556,9 @@ export default function App() {
 
             <div className="modal-brand">
               <p className="section-tag light">Confidential acquisition</p>
-              <h2 id="offer-title">Make an Offer</h2>
+              <h2 id="offer-title">Private Discussion</h2>
               <p>
-                Submit a serious proposal for QuantiValue.com. Details are encrypted
+                Share your strategic interest in QuantiValue.com. Details are encrypted
                 in transit and stored privately for owner review.
               </p>
               <div className="modal-stat">
@@ -544,7 +603,7 @@ export default function App() {
               </label>
 
               <button type="submit" disabled={offerStatus.state === "sending"}>
-                {offerStatus.state === "sending" ? "Submitting securely…" : "Submit confidential offer"}
+                {offerStatus.state === "sending" ? "Submitting securely…" : "Submit private inquiry"}
                 <Arrow />
               </button>
 
