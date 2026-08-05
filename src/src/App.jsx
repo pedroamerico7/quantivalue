@@ -77,14 +77,6 @@ const pillars = [
   },
 ];
 
-const industryMultiples = {
-  Software: 8.4,
-  Fintech: 7.2,
-  Healthcare: 6.5,
-  Industrial: 5.1,
-  Consumer: 4.6,
-};
-
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
 }
@@ -96,46 +88,179 @@ function formatViews(value) {
   return safeValue.toLocaleString("en-US");
 }
 
+
+function InteractiveValuation() {
+  const [revenue, setRevenue] = useState(500);
+  const [margin, setMargin] = useState(28);
+  const [growth, setGrowth] = useState(22);
+  const [industry, setIndustry] = useState("Software");
+  const [isRunning, setIsRunning] = useState(false);
+
+  const industryMultiples = {
+    Software: 4.8,
+    Fintech: 4.3,
+    "Business Services": 3.1,
+    Healthcare: 3.6,
+    Industrial: 2.7,
+  };
+
+  const result = useMemo(() => {
+    const baseMultiple = industryMultiples[industry] || 3.4;
+    const marginFactor = 0.72 + margin / 100;
+    const growthFactor = 0.82 + growth / 80;
+    const enterpriseValue = revenue * baseMultiple * marginFactor * growthFactor;
+    const low = enterpriseValue * 0.89;
+    const high = enterpriseValue * 1.12;
+    const confidence = Math.min(98, Math.max(82, Math.round(86 + margin / 8 + growth / 12)));
+
+    return { enterpriseValue, low, high, confidence };
+  }, [revenue, margin, growth, industry]);
+
+  const formatMoney = (value) => {
+    if (value >= 1000) return `$${(value / 1000).toFixed(2)}B`;
+    return `$${Math.round(value)}M`;
+  };
+
+  function runValuation() {
+    setIsRunning(true);
+    window.setTimeout(() => setIsRunning(false), 700);
+  }
+
+  return (
+    <section className="interactive-demo" id="interactive-demo">
+      <div className="interactive-demo-heading" data-reveal>
+        <div>
+          <p className="section-tag light">Interactive product demo</p>
+          <h2>Test the logic.<br />Review the reasoning.</h2>
+        </div>
+        <p>
+          Adjust the operating assumptions and watch the illustrative valuation,
+          confidence range and explainability signals update in real time.
+        </p>
+      </div>
+
+      <div className={`valuation-lab ${isRunning ? "is-running" : ""}`} data-reveal>
+        <div className="valuation-controls">
+          <div className="valuation-controls-heading">
+            <span>01 · INPUTS</span>
+            <strong>Operating assumptions</strong>
+          </div>
+
+          <label>
+            <span>Annual revenue</span>
+            <strong>${revenue}M</strong>
+            <input
+              type="range"
+              min="100"
+              max="2000"
+              step="25"
+              value={revenue}
+              onChange={(event) => setRevenue(Number(event.target.value))}
+            />
+          </label>
+
+          <label>
+            <span>EBITDA margin</span>
+            <strong>{margin}%</strong>
+            <input
+              type="range"
+              min="5"
+              max="55"
+              step="1"
+              value={margin}
+              onChange={(event) => setMargin(Number(event.target.value))}
+            />
+          </label>
+
+          <label>
+            <span>Annual growth</span>
+            <strong>{growth}%</strong>
+            <input
+              type="range"
+              min="0"
+              max="60"
+              step="1"
+              value={growth}
+              onChange={(event) => setGrowth(Number(event.target.value))}
+            />
+          </label>
+
+          <label>
+            <span>Industry</span>
+            <select value={industry} onChange={(event) => setIndustry(event.target.value)}>
+              {Object.keys(industryMultiples).map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          </label>
+
+          <button type="button" className="run-valuation" onClick={runValuation}>
+            <span>{isRunning ? "Running model…" : "Run AI valuation"}</span>
+            <Arrow />
+          </button>
+          <small className="valuation-disclaimer">
+            Illustrative product experience — not investment advice or a formal valuation.
+          </small>
+        </div>
+
+        <div className="valuation-output">
+          <div className="valuation-output-top">
+            <div>
+              <span>02 · OUTPUT</span>
+              <strong>Valuation intelligence</strong>
+            </div>
+            <em><i /> Model ready</em>
+          </div>
+
+          <div className="valuation-result-grid">
+            <article className="valuation-primary-result">
+              <span>Enterprise value</span>
+              <strong>{formatMoney(result.enterpriseValue)}</strong>
+              <small>Illustrative blended methodology</small>
+            </article>
+            <article>
+              <span>Comparable range</span>
+              <strong>{formatMoney(result.low)} — {formatMoney(result.high)}</strong>
+              <small>Scenario-adjusted range</small>
+            </article>
+            <article>
+              <span>AI confidence</span>
+              <strong>{result.confidence}%</strong>
+              <small>{result.confidence >= 94 ? "High evidence alignment" : "Review assumptions"}</small>
+            </article>
+          </div>
+
+          <div className="valuation-explainability">
+            <div className="explainability-heading">
+              <span>WHY THIS VALUATION?</span>
+              <strong>Explainability trace</strong>
+            </div>
+            <ul>
+              <li><i /> Growth contributes a {growth >= 25 ? "strong" : growth >= 12 ? "moderate" : "conservative"} premium.</li>
+              <li><i /> EBITDA margin indicates {margin >= 30 ? "institutional-quality" : "developing"} operating leverage.</li>
+              <li><i /> {industry} comparable multiple applied to the revenue base.</li>
+              <li><i /> Confidence reflects consistency across assumptions and scenario range.</li>
+            </ul>
+          </div>
+
+          <div className="valuation-timeline" aria-label="Valuation workflow">
+            {["Input", "Normalize", "Model", "Explain", "Decide"].map((step, index) => (
+              <div key={step} className="timeline-step">
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{step}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function App() {
   const [views, setViews] = useState(FALLBACK_VIEWS);
   const [offerOpen, setOfferOpen] = useState(false);
   const [offerStatus, setOfferStatus] = useState({ state: "idle", message: "" });
-  const [demoInputs, setDemoInputs] = useState({
-    revenue: 420,
-    margin: 24,
-    growth: 18,
-    industry: "Software",
-  });
-  const [demoRunning, setDemoRunning] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const valuationDemo = useMemo(() => {
-    const revenue = Math.max(10, Number(demoInputs.revenue) || 10);
-    const margin = Math.max(1, Number(demoInputs.margin) || 1);
-    const growth = Math.max(0, Number(demoInputs.growth) || 0);
-    const baseMultiple = industryMultiples[demoInputs.industry] || 6;
-    const qualityAdjustment = 1 + margin / 100 * 0.8 + growth / 100 * 1.15;
-    const enterpriseValue = revenue * baseMultiple * qualityAdjustment;
-    const confidence = Math.min(98, Math.round(78 + margin * 0.35 + growth * 0.25));
-    return {
-      enterpriseValue,
-      low: enterpriseValue * 0.88,
-      high: enterpriseValue * 1.12,
-      confidence,
-      multiple: baseMultiple * qualityAdjustment,
-    };
-  }, [demoInputs]);
-
-  function updateDemoInput(event) {
-    const { name, value } = event.target;
-    setDemoInputs((current) => ({ ...current, [name]: value }));
-  }
-
-  function runValuationDemo() {
-    setDemoRunning(true);
-    window.setTimeout(() => setDemoRunning(false), 850);
-  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -175,41 +300,6 @@ export default function App() {
     return () => window.removeEventListener("keydown", closeOnEscape);
   }, []);
 
-  useEffect(() => {
-    let frameId = null;
-
-    function updateScrollProgress() {
-      const documentElement = document.documentElement;
-      const scrollableHeight = documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollableHeight > 0
-        ? Math.min(1, Math.max(0, window.scrollY / scrollableHeight))
-        : 0;
-      setScrollProgress(progress);
-      frameId = null;
-    }
-
-    function onScroll() {
-      if (frameId === null) {
-        frameId = window.requestAnimationFrame(updateScrollProgress);
-      }
-    }
-
-    updateScrollProgress();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (frameId !== null) window.cancelAnimationFrame(frameId);
-    };
-  }, []);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setIsLoading(false), 720);
-    return () => window.clearTimeout(timer);
-  }, []);
-
   async function submitOffer(event) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -242,27 +332,6 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {isLoading && (
-        <div className="brand-loader" role="status" aria-label="Loading QuantiValue">
-          <div className="brand-loader-mark" aria-hidden="true">
-            <img src="/quantum-ring.svg" alt="" />
-            <span />
-          </div>
-          <strong>QuantiValue</strong>
-          <small>Financial intelligence · Built on explainability</small>
-        </div>
-      )}
-      <div
-        className="scroll-progress"
-        role="progressbar"
-        aria-label="Page reading progress"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow={Math.round(scrollProgress * 100)}
-      >
-        <span style={{ transform: `scaleX(${scrollProgress})` }} />
-      </div>
-
       <header className="site-header">
         <a className="logo" href="#top" aria-label="QuantiValue home">
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
@@ -270,10 +339,9 @@ export default function App() {
         </a>
 
         <nav aria-label="Primary navigation">
-          <a href="#platform">Platform</a>
+          <a href="#interactive-demo">Platform</a>
           <a href="#technology">Technology</a>
           <a href="#asset-package">Assets</a>
-          <a href="#investor-room">Brief</a>
           <a href="#acquire">Contact</a>
         </nav>
 
@@ -414,96 +482,7 @@ export default function App() {
         </section>
 
 
-        <section className="product-demo" id="platform">
-          <div className="product-demo-heading" data-reveal>
-            <div>
-              <p className="section-tag light">Interactive product demo</p>
-              <h2>Model value. Trace the reasoning.</h2>
-            </div>
-            <p>
-              Adjust the operating assumptions to preview how an explainable valuation
-              system can translate financial inputs into a reviewable enterprise value range.
-            </p>
-          </div>
-
-          <div className={`product-demo-shell ${demoRunning ? "is-running" : ""}`} data-reveal>
-            <form className="demo-controls" onSubmit={(event) => { event.preventDefault(); runValuationDemo(); }}>
-              <div className="demo-panel-label">Model inputs</div>
-              <label>
-                Annual revenue
-                <span className="demo-input-wrap">
-                  <i>$</i>
-                  <input name="revenue" type="number" min="10" step="10" value={demoInputs.revenue} onChange={updateDemoInput} />
-                  <b>M</b>
-                </span>
-              </label>
-              <label>
-                EBITDA margin
-                <span className="demo-input-wrap">
-                  <input name="margin" type="number" min="1" max="70" step="1" value={demoInputs.margin} onChange={updateDemoInput} />
-                  <b>%</b>
-                </span>
-              </label>
-              <label>
-                Revenue growth
-                <span className="demo-input-wrap">
-                  <input name="growth" type="number" min="0" max="100" step="1" value={demoInputs.growth} onChange={updateDemoInput} />
-                  <b>%</b>
-                </span>
-              </label>
-              <label>
-                Industry
-                <select name="industry" value={demoInputs.industry} onChange={updateDemoInput}>
-                  {Object.keys(industryMultiples).map((industry) => (
-                    <option key={industry} value={industry}>{industry}</option>
-                  ))}
-                </select>
-              </label>
-              <button type="submit">
-                {demoRunning ? "Running explainable model…" : "Run AI valuation"}
-                <Arrow />
-              </button>
-              <small>Illustrative demo only — not investment advice.</small>
-            </form>
-
-            <div className="demo-results" aria-live="polite">
-              <div className="demo-results-top">
-                <div>
-                  <span>Enterprise value</span>
-                  <strong>${(valuationDemo.enterpriseValue / 1000).toFixed(2)}B</strong>
-                </div>
-                <div>
-                  <span>AI confidence</span>
-                  <strong>{valuationDemo.confidence}%</strong>
-                </div>
-              </div>
-              <div className="demo-range-card">
-                <div>
-                  <span>Comparable range</span>
-                  <strong>${(valuationDemo.low / 1000).toFixed(2)}B — ${(valuationDemo.high / 1000).toFixed(2)}B</strong>
-                </div>
-                <div className="demo-range-track" aria-hidden="true">
-                  <i style={{ width: `${Math.min(92, valuationDemo.confidence)}%` }} />
-                  <b style={{ left: `${Math.min(90, Math.max(18, valuationDemo.confidence - 8))}%` }} />
-                </div>
-              </div>
-              <div className="demo-explainability">
-                <div className="demo-panel-label">Explainability trace</div>
-                <ul>
-                  <li><span>01</span><p><strong>Industry multiple</strong>{valuationDemo.multiple.toFixed(1)}× adjusted revenue basis</p></li>
-                  <li><span>02</span><p><strong>Profitability premium</strong>{demoInputs.margin}% EBITDA margin improves model quality</p></li>
-                  <li><span>03</span><p><strong>Growth adjustment</strong>{demoInputs.growth}% growth expands the valuation range</p></li>
-                  <li><span>04</span><p><strong>Reviewable output</strong>Assumptions remain visible and auditable</p></li>
-                </ul>
-              </div>
-              <div className="demo-timeline" aria-label="Valuation process">
-                {['Input','Normalize','Model','Explain','Decide'].map((step, index) => (
-                  <span key={step}><i>{String(index + 1).padStart(2, '0')}</i>{step}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <InteractiveValuation />
 
         <section className="technology" id="technology">
           <div className="technology-heading" data-reveal>
@@ -727,50 +706,6 @@ export default function App() {
           </div>
         </section>
 
-
-        <section className="investor-room" id="investor-room">
-          <div className="investor-room-heading" data-reveal>
-            <div>
-              <p className="section-tag light">Investor brief</p>
-              <h2>A concise acquisition case, ready for review.</h2>
-            </div>
-            <p>
-              Review the strategic rationale, included assets, transfer process and
-              commercial positioning in a focused one-page acquisition brief.
-            </p>
-          </div>
-
-          <div className="investor-room-grid">
-            <article data-reveal>
-              <span>01</span>
-              <small>POSITIONING</small>
-              <h3>Category-defining name</h3>
-              <p>QuantiValue combines quantitative intelligence with commercial value in one globally legible brand.</p>
-            </article>
-            <article data-reveal>
-              <span>02</span>
-              <small>ASSET PACKAGE</small>
-              <h3>Launch-ready foundation</h3>
-              <p>Premium .COM, identity system, working website, product vision and acquisition infrastructure.</p>
-            </article>
-            <article data-reveal>
-              <span>03</span>
-              <small>TRANSFER</small>
-              <h3>Direct owner transaction</h3>
-              <p>Private discussion, secure payment, registrar transfer and delivery of the included digital assets.</p>
-            </article>
-          </div>
-
-          <div className="investor-room-actions" data-reveal>
-            <a className="investor-brief-button" href="/investor-brief.html" target="_blank" rel="noreferrer">
-              Open investor brief <Arrow />
-            </a>
-            <button className="investor-discussion-button" type="button" onClick={() => setOfferOpen(true)}>
-              Request private discussion
-            </button>
-          </div>
-        </section>
-
         <section className="acquire" id="acquire">
           <div className="acquire-grid" aria-hidden="true" />
           <div className="acquire-copy" data-reveal>
@@ -800,7 +735,7 @@ export default function App() {
           <img className="logo-symbol" src="/quantum-ring.svg" alt="" aria-hidden="true" />
           <span className="logo-name">QuantiValue</span>
         </a>
-        <span className="footer-signature">Built for <b>AI</b> <i>·</i> <b>Finance</b> <i>·</i> <b>Valuation</b></span>
+        <span>Premium brand available for acquisition</span>
         <a href="mailto:sales@quantivalue.com">sales@quantivalue.com</a>
       </footer>
 
@@ -848,7 +783,7 @@ export default function App() {
               <label>
                 Offer amount (USD)
                 <input name="amount" type="number" min="50000" step="1000" required defaultValue="75000" />
-                <span className="field-hint">Suggested opening proposal: US$75,000. Minimum: US$50,000.</span>
+                <span className="field-hint">Suggested opening proposal: US$75,000. Minimum considered: US$50,000.</span>
               </label>
               <label>
                 Message
